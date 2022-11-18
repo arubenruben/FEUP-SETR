@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, top=0.5cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage[portuguese]{babel}
+
+
+\title{{\normalsize Faculdade de Engenharia da Universidade do Porto}\\Sistemas Embarcados --- Proposta de Projeto\\\textbf{Advanced $\mu$kernel on Arduino}}
+\author{André Campanhã\\\texttt{up201806518@fe.up.pt} \and Miguel Almeida\\\texttt{up201806205@fe.up.pt} \and Rúben Almeida\\\texttt{up201704618@fe.up.pt}}
+
+\date{Grupo A\\\vspace{0.5em}\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Hardware Necessário}
+
+\begin{itemize}
+    \item 3$\times$ Arduino Uno
+    \item 3$\times$ Multi-function Shield
+    \item 3$\times$ Cabo USB-B $\longleftrightarrow$ USB-A
+\end{itemize}
+
+\section{Descrição do Projeto}
+
+\subsection{Objetivos do Projeto}
+% Develop a tick based ukernel for the Arduino, supporting fixed priority multi-threading, full pre-emption, with independent stacks for each thread. (requires some assembly programming skills. Assembly can be embedded in C code)
+
+O objetivo principal do projeto é desenvolver um \textit{micro-kernel} baseado em \textit{ticks} para o \textit{Arduino Uno}, que suporte \textit{multi-threading} e \textit{full pre-emption} com \textit{stacks} independentes para cada \textit{thread}. Além disso, implementaríamos também \textit{mutexes} com \textit{priority inheritance}, de forma a conseguirmos ter tarefas que utilizem recursos partilhados.
+
+Como tarefa secundária, 
+
+\subsection{Arquitetura de Alto Nível do Software}
+
+O grupo pretende comprovar a escalonibilidade de um sistema composto pelas seguintes cinco tarefas:
+
+\subsubsection{Task 1 --- Contador de Segundos}
+
+Uma tarefa de baixa prioridade pretende manipular o mostrador de 7 segmentos de forma a apresentar um contador de segundos. Desta forma, teremos uma task de perfil periódico de segundo a segundo a desempenhar esta funcionalidade.
+
+\subsubsection{Task 2 --- Ativação dos LEDs}
+\label{task_2}
+Uma tarefa de baixa prioridade pretende ativar os LEDs do Arduino Uno de forma periódica. O número de LEDs a serem acesos em cada ativação dependerá de uma variável \texttt{number\_leds}.
+
+\subsubsection{Task 3 --- Manipulação do número dos LEDs}
+
+Uma tarefa de prioridade intermédia irá manipular a variável partilhada \texttt{number\_leds}. A alteração deste valor resulta que a Task 2 irá acender diferentes números de LEDs ao longo do tempo.
+
+\subsubsection{Task 4 --- Buzzer ativado por botão}
+
+Uma tarefa irá ativar o buzzer do Arduino reagindo ao click de um dos botões.
+
+\subsubsection{Task 5 --- Tarefa Full Stop}
+
+Uma tarefa de prioridade alta irá ativar-se durante o período que um dos botões estiver a ser premido. Esta tarefa tem como objetivo desestabilizar a escalonabilidade do sistema, dado que pretende monopolizar os recursos do Scheduler, paralisando todas as restantes tasks menos prioritárias. 
+
+\end{document}
