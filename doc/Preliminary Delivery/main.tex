@@ -26,32 +26,32 @@
 \subsection{Objetivos do Projeto}
 % Develop a tick based ukernel for the Arduino, supporting fixed priority multi-threading, full pre-emption, with independent stacks for each thread. (requires some assembly programming skills. Assembly can be embedded in C code)
 
-O objetivo principal do projeto é desenvolver um \textit{micro-kernel} baseado em \textit{ticks} para o \textit{Arduino Uno}, que suporte \textit{multi-threading} e \textit{full pre-emption} com \textit{stacks} independentes para cada \textit{thread}. Além disso, implementaríamos também \textit{mutexes} com \textit{priority inheritance}, de forma a conseguirmos ter tarefas que utilizem recursos partilhados.
+O objetivo principal do projeto é desenvolver um \textit{micro-kernel} baseado em \textit{ticks} para o \textit{Arduino Uno}, que suporte \textit{multi-threading} e \textit{full pre-emption} com \textit{stacks} independentes para cada \textit{thread}. Para além disso, o grupo pretende implementar \textit{mutexes} com \textit{priority inheritance}. Desta forma o kernel desenvolvido passará a conseguir ter tarefas que utilizem recursos partilhados.
 
-Como tarefa secundária, 
+Como tarefa secundária, caso se verifique temporalmente exequível, irá ser implementado funcionalidades de Hierarchical Scheduling, de forma a ser possível correr tarefas com diferentes políticas de escalonamento no mesmo CPU, à semelhança do que acontece num sistema Linux.
 
 \subsection{Arquitetura de Alto Nível do Software}
 
-O grupo pretende comprovar a escalonibilidade de um sistema composto pelas seguintes cinco tarefas:
+O grupo pretende comprovar a escalonabilidade de um sistema composto pelas seguintes cinco tarefas concorrentes:
 
 \subsubsection{Task 1 --- Contador de Segundos}
 
-Uma tarefa de baixa prioridade pretende manipular o mostrador de 7 segmentos de forma a apresentar um contador de segundos. Desta forma, teremos uma task de perfil periódico de segundo a segundo a desempenhar esta funcionalidade.
+Uma tarefa de baixa prioridade pretende manipular o mostrador de 7 segmentos do Arduino de forma a apresentar um contador de segundos. Desta forma, teremos uma task com periodicidade de um segundo a desempenhar esta funcionalidade.
 
 \subsubsection{Task 2 --- Ativação dos LEDs}
 \label{task_2}
-Uma tarefa de baixa prioridade pretende ativar os LEDs do Arduino Uno de forma periódica. O número de LEDs a serem acesos em cada ativação dependerá de uma variável \texttt{number\_leds}.
+Uma tarefa de baixa prioridade pretende ativar os LEDs do Arduino Uno de forma periódica. O número de LEDs a serem acesos em cada ativação dependerá de uma variável partilhada \texttt{number\_leds}.
 
-\subsubsection{Task 3 --- Manipulação do número dos LEDs}
+\subsubsection{Task 3 --- Manipulação do Número de LEDs}
 
-Uma tarefa de prioridade intermédia irá manipular a variável partilhada \texttt{number\_leds}. A alteração deste valor resulta que a Task 2 irá acender diferentes números de LEDs ao longo do tempo.
+Uma tarefa de prioridade intermédia irá manipular a variável \texttt{number\_leds}. Em resultado da ativação desta tarefa o número de LEDs acesos pelo Arduino Uno irá variar ao longo da execução. A variável \texttt{number\_leds} irá ser partilhada com a Task 2 (\ref{task_2})
 
-\subsubsection{Task 4 --- Buzzer ativado por botão}
+\subsubsection{Task 4 --- Buzzer ativo por botão}
 
-Uma tarefa irá ativar o buzzer do Arduino reagindo ao click de um dos botões.
+Uma tarefa de baixa prioridade irá ativar o buzzer do Arduino em reação ao click num dos botões do hardware. Esta tarefa será assim de caraterísticas aperiódicas, e dependerá, somente, da atuação do utilizador humano.
 
 \subsubsection{Task 5 --- Tarefa Full Stop}
 
-Uma tarefa de prioridade alta irá ativar-se durante o período que um dos botões estiver a ser premido. Esta tarefa tem como objetivo desestabilizar a escalonabilidade do sistema, dado que pretende monopolizar os recursos do Scheduler, paralisando todas as restantes tasks menos prioritárias. 
+Uma tarefa de prioridade alta irá ativar-se durante o período que um dos botões estiver a ser premido. Esta tarefa tem como objetivo desestabilizar a escalonabilidade do sistema. Recorrendo à sua elevada prioridade pretende-se monopolizar os recursos do CPU. Quando ativa, esta tarefa irá paralisar todas as restantes que apresentem uma menor prioridade. 
 
 \end{document}
