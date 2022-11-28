@@ -1,7 +1,8 @@
 #include <Arduino.h>
-#include "timer/timer.h"
-#include "timer/handler.h"
-#include "segments/segments.h"
+#include "timer.h"
+#include "handler.h"
+#include "segments.h"
+#include "leds.h"
 
 void setup()
 {
@@ -9,6 +10,7 @@ void setup()
 
   // Initializes the 7 Segments
   segments_init();
+  leds_init();
 
   // Fire a tick each second
   timer_init(1, tick_handler);

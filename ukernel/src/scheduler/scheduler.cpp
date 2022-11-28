@@ -1,7 +1,6 @@
-#include <scheduler/scheduler.h>
+#include <scheduler.h>
 
 int scheduler_init()
 {
-
     return 0;
 }

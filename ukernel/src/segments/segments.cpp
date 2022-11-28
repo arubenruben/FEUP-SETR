@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "segments.h"
 
 /* Segment byte maps for numbers 0 to 9 */
@@ -11,14 +10,6 @@ void segments_init()
     pinMode(LATCH_DIO, OUTPUT);
     pinMode(CLK_DIO, OUTPUT);
     pinMode(DATA_DIO, OUTPUT);
-}
-
-void write_integer_to_segments(int number)
-{
-    WriteNumberToSegment(3, number % 10);
-    WriteNumberToSegment(2, (number / 10) % 10);
-    WriteNumberToSegment(1, (number / 100) % 10);
-    WriteNumberToSegment(0, (number / 1000) % 10);
 }
 
 void WriteNumberToSegment(byte Segment, byte Value)
