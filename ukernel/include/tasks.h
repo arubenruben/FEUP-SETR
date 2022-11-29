@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include "segments.h"
+#include "scheduler.h"
 
 #define MAX_NUMBER 9999
 

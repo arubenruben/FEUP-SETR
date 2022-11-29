@@ -1,10 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
-
-#define LATCH_DIO 4
-#define CLK_DIO 7
-#define DATA_DIO 8
+#include "constants.h"
 
 void segments_init();
 

@@ -1,8 +1,12 @@
 #include <Arduino.h>
+#include "constants.h"
 #include "timer.h"
 #include "handler.h"
 #include "segments.h"
 #include "leds.h"
+
+
+uint8_t stack[N_TASKS * TASK_STACKSIZE];
 
 void setup()
 {
@@ -13,7 +17,6 @@ void setup()
   leds_init();
 
   // Fire a tick each second
-  timer_init(1, tick_handler);
 }
 
 void loop()

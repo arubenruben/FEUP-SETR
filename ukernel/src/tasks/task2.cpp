@@ -5,6 +5,7 @@ void *task_2(void *args)
 {
     // TODO: Change this. It will be a shared resourced
     int number_leds = (int)args;
+    Serial.write("Teste");
 
     while (true)
     {
