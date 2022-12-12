@@ -1,5 +1,6 @@
 #pragma once
 
 #include <Arduino.h>
+#include "scheduler.h"
 
-void timer_init(int freq, void (*timer_func)(void));
+void initialize_timer(int freq);

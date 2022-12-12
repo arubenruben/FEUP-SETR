@@ -1,18 +1,16 @@
 #include "timer.h"
 
-void (*timer_func)(void);
-
 ISR(TIMER1_COMPA_vect)
 {
-    timer_func();
+    
 }
 
-void timer_init(int freq, void (*func)(void))
+void initialize_timer(int freq)
 {
     noInterrupts(); // disable all interrupts
 
-    timer_func = func;
-    
+    // timer_func = func;
+
     TCCR1A = 0;
     TCCR1B = 0;
     TCNT1 = 0;

@@ -1,13 +1,10 @@
-#include "tasks.h"
+#include "task.h"
 
 void *task_1(void *args)
 {
-    static int seconds_counter = 0;
-
     while (true)
     {
-        seconds_counter++;
-        scheduler_yield();
+        Serial.println("Hello World");
     }
 
     return NULL;

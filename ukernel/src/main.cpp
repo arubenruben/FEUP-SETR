@@ -1,22 +1,10 @@
-#include <Arduino.h>
-#include "constants.h"
-#include "timer.h"
-#include "handler.h"
-#include "segments.h"
-#include "leds.h"
-
-
-uint8_t stack[N_TASKS * TASK_STACKSIZE];
+#include "main.h"
 
 void setup()
 {
-  Serial.begin(9600);
-
-  // Initializes the 7 Segments
-  segments_init();
-  leds_init();
-
-  // Fire a tick each second
+  Serial.begin(BAUD_RATE);
+  initialize_kernel();
+  initialize_timer(DEFAULT_FREQ);
 }
 
 void loop()
