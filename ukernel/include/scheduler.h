@@ -3,16 +3,6 @@
 #include <Arduino.h>
 #include "constants.h"
 
-typedef struct {
-  uint8_t priority;
-  uint8_t period;
-  uint8_t delay;
-  void (*func)(void);
-  uint16_t sp;
-  uint8_t state;
-} task_t;
-
-task_t tasks[N_TASKS];
 
 /**
  * @brief Setup the tasks array and initialize the timer to the desired frequency
@@ -42,3 +32,5 @@ void scheduler_schedule(void);
  * 
  */
 void scheduler_yield();
+
+void scheduler_dispatch(void);

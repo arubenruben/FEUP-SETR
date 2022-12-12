@@ -2,9 +2,20 @@
 #include "timer.h"
 #include "context.h"
 
-#define TASK_STATE_IDLE 0
-#define TASK_STATE_RUNNING 1
+#define TASK_STATE_NOT_INIT 0
+#define TASK_STATE_IDLE 1
+#define TASK_STATE_RUNNING 2
 
+typedef struct {
+  uint8_t priority;
+  uint8_t period;
+  uint8_t delay;
+  void (*func)(void);
+  uint16_t sp;
+  uint8_t state;
+} task_t;
+
+task_t tasks[N_TASKS];
 uint16_t current_task;
 
 void scheduler_tick_handler(void)
@@ -35,7 +46,7 @@ int scheduler_add_task(void (*func)(void), int period, int delay)
             tasks[i].period = period;
             tasks[i].func = func;
             tasks[i].priority = i;
-            tasks[i].state = TASK_STATE_IDLE;
+            tasks[i].state = TASK_STATE_NOT_INIT;
             return i;
         }
     }
@@ -59,7 +70,7 @@ void scheduler_schedule(void)
     }
 }
 
-void scheduler_yield()
+void scheduler_yield(void)
 {
     //Context switch«
     SAVE_CONTEXT();
@@ -80,7 +91,15 @@ void scheduler_dispatch(void)
         }
     }
 
-    RESTORE_CONTEXT();
-    interrupts();
-    // Set the PC
+    if (tasks[current_task].state == TASK_STATE_NOT_INIT)
+    {
+        (tasks[current_task].func)();
+    }
+    else
+    {
+        RESTORE_CONTEXT();
+        interrupts();
+        // Set the PC
+    }
+
 }
