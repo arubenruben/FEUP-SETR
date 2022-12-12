@@ -11,8 +11,11 @@ typedef struct Tasks
     uint8_t delay;
     uint8_t period;
     bool init;
-    
+
     void *(*func)(void *);
+
+    void (*scheduler_yield)(void);
+
 } Task;
 
 void *task_1(void *args);

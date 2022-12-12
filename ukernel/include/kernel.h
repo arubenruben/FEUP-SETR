@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include "constants.h"
 #include "task.h"
+#include "scheduler.h"
 
 extern uint8_t stack[N_TASKS * TASK_STACK_SIZE];
 

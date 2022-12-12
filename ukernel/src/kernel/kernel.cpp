@@ -1,7 +1,9 @@
 #include "kernel.h"
 
 Task tasks[N_TASKS];
+
 uint8_t stack[N_TASKS * TASK_STACK_SIZE];
+
 uint8_t current_task;
 
 void initialize_stack()

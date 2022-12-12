@@ -40,7 +40,14 @@ void scheduler_dispatch(void)
 
     if (tasks[current_task].init == false)
     {
-        (tasks[current_task].func)(NULL);
+        /**
+         * TODO: DANGER DANGER DANGER
+         * THIS IS NOT A GOOD PLACE TO PLACE INITIALIZATIONS
+         */
+        tasks[current_task].scheduler_yield = scheduler_yield;
+
+        (tasks[current_task].func)(&tasks[current_task]);
+        tasks[current_task].init = true;
     }
     else
     {
@@ -50,5 +57,5 @@ void scheduler_dispatch(void)
 
 void scheduler_yield(void)
 {
-    // TODO: Pass To Task Pointer to Scheduler Yield
+    Serial.println("Yield");
 }

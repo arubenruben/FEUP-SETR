@@ -2,6 +2,7 @@
 
 ISR(TIMER1_COMPA_vect)
 {
+    scheduler_tick_handler();
 }
 
 void initialize_timer(int freq)

@@ -6,16 +6,16 @@ Task add_task(uint8_t priority)
 
     task_to_return.priority = priority;
     task_to_return.state = TASK_STATE_IDLE;
-    task_to_return.init = false;
+    task_to_return.init = false;    
 
     switch (priority)
     {
-    case 1:
+    case 0:
         task_to_return.func = task_1;
         task_to_return.delay = 0;
         task_to_return.period = 3;
         break;
-    case 2:
+    case 1:
         task_to_return.func = task_2;
         task_to_return.delay = 0;
         task_to_return.period = 5;
