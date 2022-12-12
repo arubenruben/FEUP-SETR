@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include "constants.h"
+#include "kernel.h"
 
 void scheduler_schedule(void);
 

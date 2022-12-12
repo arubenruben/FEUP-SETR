@@ -2,14 +2,11 @@
 
 ISR(TIMER1_COMPA_vect)
 {
-    
 }
 
 void initialize_timer(int freq)
 {
     noInterrupts(); // disable all interrupts
-
-    // timer_func = func;
 
     TCCR1A = 0;
     TCCR1B = 0;

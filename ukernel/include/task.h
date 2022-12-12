@@ -8,6 +8,10 @@ typedef struct Tasks
 {
     uint8_t priority;
     uint8_t state;
+    uint8_t delay;
+    uint8_t period;
+    bool init;
+    
     void *(*func)(void *);
 } Task;
 
