@@ -1,19 +1,9 @@
-#include "main.h"
+#include <Arduino.h>
 
-void setup()
-{
-  Serial.begin(BAUD_RATE);
-
-  while (!Serial)
-  {
-    ;
-  }
-
-  initialize_kernel();
-
-  initialize_timer(DEFAULT_FREQ);
+void setup() {
+  // put your setup code here, to run once:
 }
 
-void loop()
-{
+void loop() {
+  // put your main code here, to run repeatedly:
 }
