@@ -1,18 +1,18 @@
 #include "scheduler.h"
 
-void scheduler_tick_handler(void)
+ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
-    Serial.println("Tick");
-
-    SAVE_CONTEXT()
+    if (current_task < MAX_NUMBER)
+        SAVE_CONTEXT();
 
     scheduler_schedule();
 
     scheduler_dispatch();
 
-    RESTORE_CONTEXT();
+    if (current_task < MAX_NUMBER)
+        RESTORE_CONTEXT();
 
-    asm volatile("ret");
+    asm volatile("reti");
 }
 
 void scheduler_schedule(void)
@@ -49,7 +49,8 @@ void scheduler_dispatch(void)
         }
     }
 
-    stack_pointer = tasks[current_task].stack_pointer;
+    // stack_pointer = tasks[current_task].stack_pointer;
+    stack_pointer = &stack[24];
 }
 
 void scheduler_yield(void)
@@ -66,7 +67,7 @@ task_t add_task(uint8_t priority)
 
     task_to_return.state = TASK_STATE_IDLE;
 
-    task_to_return.stack_pointer = &stack[(priority + 1) * TASK_STACK_SIZE - 1];
+    task_to_return.stack_pointer = &(stack[(priority + 1) * TASK_STACK_SIZE - 1]);
 
     switch (priority)
     {
@@ -76,11 +77,11 @@ task_t add_task(uint8_t priority)
         task_to_return.period = 3;
         break;
     case 1:
-        task_to_return.func = task_2;
+        // task_to_return.func = task_2;
         task_to_return.delay = 0;
         task_to_return.period = 5;
         break;
-        
+
     default:
         exit(EXIT_FAILURE);
         break;

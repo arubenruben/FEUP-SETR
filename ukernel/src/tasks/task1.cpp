@@ -1,7 +1,7 @@
 #include "task.h"
 #include "scheduler.h"
 
-void *task_1(void *args)
+void task_1(void)
 {
     Serial.println("Running task_t 1");
 
@@ -12,5 +12,4 @@ void *task_1(void *args)
         Serial.flush();
     }
 
-    return NULL;
 }

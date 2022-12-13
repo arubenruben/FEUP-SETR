@@ -2,8 +2,8 @@
 
 #define BAUD_RATE 9600
 
-#define N_TASKS 2
-#define TASK_STACK_SIZE 100
+#define N_TASKS 1
+#define TASK_STACK_SIZE 60
 
 #define DEFAULT_FREQ 1
 
