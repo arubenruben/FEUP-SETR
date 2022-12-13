@@ -11,15 +11,13 @@ typedef struct Tasks
     volatile uint8_t delay;
     uint8_t period;
 
-    volatile uint8_t init;
-
     void *(*func)(void *);
 
-    void (*scheduler_yield)(void);
+    volatile uint8_t *stack_pointer;
 
-    volatile uint8_t *task_user_level_stack_pointer;
+} task_t;
 
-} Task;
+void *task_idle(void *args);
 
 void *task_1(void *args);
 
@@ -27,4 +25,6 @@ void *task_2(void *args);
 
 void initialize_tasks();
 
-Task add_task(uint8_t priority);
+task_t add_task(uint8_t priority);
+
+void initialize_task_stack_bytes(task_t *task);

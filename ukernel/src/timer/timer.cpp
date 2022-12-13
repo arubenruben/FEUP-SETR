@@ -1,8 +1,10 @@
 #include "timer.h"
 
-ISR(TIMER1_COMPA_vect)
+ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
     scheduler_tick_handler();
+
+    asm volatile("reti");
 }
 
 void initialize_timer(int freq)

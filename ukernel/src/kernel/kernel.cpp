@@ -1,12 +1,12 @@
 #include "kernel.h"
 
-Task tasks[N_TASKS];
+task_t tasks[N_TASKS];
 
 volatile uint8_t stack[N_TASKS * TASK_STACK_SIZE];
 
 volatile uint8_t current_task;
 
-volatile stackPtr_t *volatile curr_stack;
+volatile void *volatile stack_pointer;
 
 void initialize_stack()
 {
@@ -21,6 +21,19 @@ void initialize_tasks()
     for (uint8_t i = 0; i < N_TASKS; i++)
     {
         tasks[i] = add_task(i);
+
+        volatile uint8_t *tmp_stack_pointer = tasks[i].stack_pointer;
+
+        initialize_task_stack_bytes(&tasks[i]);
+
+        /**
+         * TODO: Understand If this is Correct
+         * It Could be The High or the Low Address
+         * Ensure Correctness
+         *
+         */
+
+        tasks[i].stack_pointer = tmp_stack_pointer;
     }
 }
 
@@ -32,6 +45,6 @@ void initialize_current_task()
 void initialize_kernel()
 {
     initialize_stack();
-    initialize_tasks();
     initialize_current_task();
+    initialize_tasks();
 }

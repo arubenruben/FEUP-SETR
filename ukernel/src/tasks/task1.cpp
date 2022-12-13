@@ -1,19 +1,15 @@
 #include "task.h"
-#include "utils.h"
+#include "scheduler.h"
 
 void *task_1(void *args)
 {
-    Task *task = (Task *)args;
-    
+    Serial.println("Running task_t 1");
+
     while (true)
     {
-        Serial.println("Durante");
-    
-        print_task(*task);
-
         Serial.println("Hello World");
 
-        task->scheduler_yield();
+        Serial.flush();
     }
 
     return NULL;

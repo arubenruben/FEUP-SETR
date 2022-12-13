@@ -8,7 +8,7 @@
 
 extern volatile uint8_t stack[N_TASKS * TASK_STACK_SIZE];
 
-extern Task tasks[N_TASKS];
+extern task_t tasks[N_TASKS];
 
 extern volatile uint8_t current_task;
 

@@ -2,8 +2,17 @@
 
 void scheduler_tick_handler(void)
 {
+    Serial.println("Tick");
+
+    SAVE_CONTEXT()
+
     scheduler_schedule();
+
     scheduler_dispatch();
+
+    RESTORE_CONTEXT();
+
+    asm volatile("ret");
 }
 
 void scheduler_schedule(void)
@@ -40,47 +49,42 @@ void scheduler_dispatch(void)
         }
     }
 
-    if (current_task == MAX_NUMBER)
-        return;
-
-    if (tasks[current_task].init == 0)
-    {
-        Serial.println("Apos Condicao");
-        Serial.println(tasks[current_task].init);
-        Serial.println("---------------");
-        /**
-         * TODO: DANGER DANGER DANGER
-         * THIS IS NOT A GOOD PLACE TO PLACE INITIALIZATIONS
-         */
-        tasks[current_task].init = 1;
-
-        tasks[current_task].task_user_level_stack_pointer = &stack[tasks[current_task].priority * TASK_STACK_SIZE];
-        tasks[current_task].scheduler_yield = scheduler_yield;
-
-        Serial.println("Antes");
-        print_task(tasks[current_task]);
-        /**
-         * DANGER DANGER DANGER
-         * FUNC CALL MUST BE THE LAST LINE EXECUTED.
-         * Consider .func() as a Return for Scheduler Dispatch
-         */
-        (tasks[current_task].func)(&tasks[current_task]);
-    }
-    else
-    {
-        // TODO:Restore Context
-    }
+    stack_pointer = tasks[current_task].stack_pointer;
 }
 
 void scheduler_yield(void)
 {
-    /**
-     * Curr_Stack is Used inside context.h as extern variable embedded in the ASM Code as The Reference Wher
-     *
-     */
-    curr_stack = tasks[current_task].task_user_level_stack_pointer;
-    SAVE_CONTEXT();
+}
 
-    tasks[current_task].state = TASK_STATE_IDLE;
-    scheduler_dispatch();
+//---------------------------
+
+task_t add_task(uint8_t priority)
+{
+    task_t task_to_return;
+
+    task_to_return.priority = priority;
+
+    task_to_return.state = TASK_STATE_IDLE;
+
+    task_to_return.stack_pointer = &stack[(priority + 1) * TASK_STACK_SIZE - 1];
+
+    switch (priority)
+    {
+    case 0:
+        task_to_return.func = task_1;
+        task_to_return.delay = 0;
+        task_to_return.period = 3;
+        break;
+    case 1:
+        task_to_return.func = task_2;
+        task_to_return.delay = 0;
+        task_to_return.period = 5;
+        break;
+        
+    default:
+        exit(EXIT_FAILURE);
+        break;
+    }
+
+    return task_to_return;
 }
