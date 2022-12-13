@@ -3,6 +3,8 @@
 #include <Arduino.h>
 #include "constants.h"
 #include "kernel.h"
+#include "context.h"
+#include "utils.h"
 
 void scheduler_schedule(void);
 

@@ -7,14 +7,17 @@
 typedef struct Tasks
 {
     uint8_t priority;
-    uint8_t state;
-    uint8_t delay;
+    volatile uint8_t state;
+    volatile uint8_t delay;
     uint8_t period;
-    bool init;
+
+    volatile uint8_t init;
 
     void *(*func)(void *);
 
     void (*scheduler_yield)(void);
+
+    volatile uint8_t *task_user_level_stack_pointer;
 
 } Task;
 

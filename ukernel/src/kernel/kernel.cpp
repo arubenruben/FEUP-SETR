@@ -2,9 +2,11 @@
 
 Task tasks[N_TASKS];
 
-uint8_t stack[N_TASKS * TASK_STACK_SIZE];
+volatile uint8_t stack[N_TASKS * TASK_STACK_SIZE];
 
-uint8_t current_task;
+volatile uint8_t current_task;
+
+volatile stackPtr_t *volatile curr_stack;
 
 void initialize_stack()
 {
