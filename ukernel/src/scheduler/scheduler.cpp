@@ -12,7 +12,7 @@ void scheduler_tick_handler()
 
     if (current_task != MAX_NUMBER)
     {
-        current_task_stack_pointer = &tasks[0].stack_pointer;
+        current_task_stack_pointer = &tasks[current_task].stack_pointer;
         portRESTORE_CONTEXT()
     }
 
@@ -60,7 +60,7 @@ void scheduler_yield(void)
 
     current_task_stack_pointer = NULL;
 
-    asm volatile("ret");
+    scheduler_tick_handler();
 }
 
 //-----------------
@@ -83,7 +83,7 @@ task_t add_task(uint8_t priority)
 
         task_to_return.func = task_1;
         task_to_return.delay = 0;
-        task_to_return.period = 5;
+        task_to_return.period = 20;
 
         break;
     case 1:
@@ -92,7 +92,7 @@ task_t add_task(uint8_t priority)
 
         task_to_return.func = task_2;
         task_to_return.delay = 0;
-        task_to_return.period = 6;
+        task_to_return.period = 20;
 
         break;
     default:

@@ -7,6 +7,7 @@ void *task_1(void *args)
     while (true)
     {
         Serial.println("Hello World");
+        Serial.flush();
         value->scheduler_yield();
     }
 
