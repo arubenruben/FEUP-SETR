@@ -4,7 +4,7 @@
 
 typedef struct struct_task
 {
-    volatile uint16_t *stack_pointer;
+    volatile uint8_t *stack_pointer;
 
     void (*func)(void);
 
@@ -12,4 +12,4 @@ typedef struct struct_task
 
 void task_1(void);
 
-void init_task_stack(task_t *task);
+void initialize_task_stack_bytes(task_t *task);

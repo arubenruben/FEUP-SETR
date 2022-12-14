@@ -1,11 +1,8 @@
-#include "tasks.h"
+#include "task.h"
 
 void task_1(void)
 {
-    noInterrupts();
-
-    while (true)
-    {
+    while (true){
         Serial.println("Hello World");
     }
 }
