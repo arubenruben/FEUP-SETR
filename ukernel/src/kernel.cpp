@@ -4,6 +4,8 @@ uint8_t stack[STACK_SIZE * NUM_TASKS];
 
 task_t tasks[NUM_TASKS];
 
+volatile void *volatile px_current_TCB = NULL;
+
 void init_stack()
 {
     for (size_t i = 0; i < STACK_SIZE * NUM_TASKS; i++)
