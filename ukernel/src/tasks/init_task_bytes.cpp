@@ -16,6 +16,11 @@ void init_task_bytes(task_t *task)
 
     *task->stack_pointer = (uint8_t)0x00; /* R0 */
     task->stack_pointer--;
+    /**
+     * Push 0x80 to Status Register activates the Global Bit For Interrupts
+     * According To: http://www.rjhcoding.com/avr-asm-sreg.php
+     */
+
     *task->stack_pointer = (uint8_t)0x80;
     task->stack_pointer--;
 
@@ -66,10 +71,22 @@ void init_task_bytes(task_t *task)
     task->stack_pointer--;
     *task->stack_pointer = (uint8_t)0x23; /* R23 */
     task->stack_pointer--;
-    *task->stack_pointer = (uint8_t)0x24; /* R24 */
+
+    /**
+     * Parameters adapted from Joao Costa
+     * https://github.com/JoaoCostaIFG/SETR/blob/master/uKernel/src/sched/Task.cpp
+     */
+
+    uint16_t param_address = (uint16_t)&task->par_value;
+    
+    *task->stack_pointer = (uint8_t)(param_address & (uint16_t)0x00ff); /* R24 */
     task->stack_pointer--;
-    *task->stack_pointer = (uint8_t)0x25; /* R25 */
+
+    param_address >>= 8;
+
+    *task->stack_pointer = (uint8_t)(param_address & (uint16_t)0x00ff); /* R25 */
     task->stack_pointer--;
+
     *task->stack_pointer = (uint8_t)0x26; /* R26 X */
     task->stack_pointer--;
     *task->stack_pointer = (uint8_t)0x27; /* R27 */

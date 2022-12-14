@@ -11,3 +11,5 @@ void scheduler_tick_handler() __attribute__((naked));
 void scheduler_schedule(void);
 
 void scheduler_dispatch(void);
+
+void scheduler_yield(void) __attribute__((naked));

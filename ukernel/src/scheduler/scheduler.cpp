@@ -1,6 +1,5 @@
 #include "scheduler.h"
 
-
 void scheduler_tick_handler()
 {
     if (current_task != MAX_NUMBER)
@@ -48,8 +47,23 @@ void scheduler_dispatch(void)
         }
     }
 }
+/**
+ * Dont Call Dispatcher Here. Wait For the Tick to Do That Logic
+ */
+void scheduler_yield(void)
+{
+    portSAVE_CONTEXT();
 
+    tasks[current_task].state = TASK_STATE_IDLE;
 
+    current_task = MAX_NUMBER;
+
+    current_task_stack_pointer = NULL;
+
+    asm volatile("ret");
+}
+
+//-----------------
 task_t add_task(uint8_t priority)
 {
     task_t task_to_return;
@@ -63,14 +77,23 @@ task_t add_task(uint8_t priority)
     switch (priority)
     {
     case 0:
+
+        task_to_return.par_value.scheduler_yield = scheduler_yield;
+        task_to_return.par_value.dummy_num = 20;
+
         task_to_return.func = task_1;
         task_to_return.delay = 0;
         task_to_return.period = 5;
+
         break;
     case 1:
+        task_to_return.par_value.scheduler_yield = scheduler_yield;
+        task_to_return.par_value.dummy_num = 20;
+
         task_to_return.func = task_2;
         task_to_return.delay = 0;
         task_to_return.period = 6;
+
         break;
     default:
         exit(EXIT_FAILURE);

@@ -4,6 +4,13 @@
 #include <errno.h>
 #include "constants.h"
 
+typedef struct struct_generic_params
+{
+    void (*scheduler_yield)(void);
+    uint8_t dummy_num;
+
+} params;
+
 typedef struct struct_task
 {
     uint8_t priority;
@@ -16,7 +23,10 @@ typedef struct struct_task
 
     void *(*func)(void *);
 
+    params par_value;
+
 } task_t;
+
 
 task_t add_task(uint8_t priority);
 
