@@ -4,14 +4,17 @@ void setup()
 {
   Serial.begin(BAUD_RATE);
 
+  while (!Serial)
+  {
+    ;
+  }
+
   init_kernel();
 
-  px_current_TCB = &tasks[0].stack_pointer;
-
-  portRESTORE_CONTEXT();
+  init_timer(DEFAULT_FREQ);
 }
 
 void loop()
 {
-  
+  // Do Nothing
 }

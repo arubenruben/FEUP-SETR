@@ -1,10 +1,11 @@
 #include "task.h"
 
-void *task_1(void *args)
+void *task_2(void *args)
 {
+
     while (true)
     {
-        Serial.println("Hello World");
+        Serial.println("Goodbye");
     }
 
     return NULL;

@@ -3,8 +3,8 @@
 #include <Arduino.h>
 #include "constants.h"
 #include "kernel.h"
-#include "context.h"
+#include "timer.h"
 
-void setup();
+void setup(void);
 
-void loop();
+void loop(void);
