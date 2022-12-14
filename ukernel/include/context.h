@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-extern volatile uint8_t *volatile current_task_stack_pointer;
+extern volatile void *volatile current_task_stack_pointer;
 
 /**
  * This code was provided by FEUP - Ricardo Fontao

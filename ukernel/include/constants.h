@@ -1,6 +1,6 @@
 #pragma once
 
-#define NUM_TASKS 1
+#define N_TASKS 2
 
 #define TASK_STACK_SIZE 100
 
@@ -9,3 +9,6 @@
 #define MAX_NUMBER 255
 
 #define DEFAULT_FREQ 1
+
+#define TASK_STATE_IDLE 0
+#define TASK_STATE_RUNNING 1

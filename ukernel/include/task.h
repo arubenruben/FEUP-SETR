@@ -2,10 +2,15 @@
 
 #include <Arduino.h>
 #include <errno.h>
+#include "constants.h"
 
 typedef struct struct_task
 {
     uint8_t priority;
+    uint8_t delay;
+    uint8_t period;
+
+    uint8_t state;
 
     volatile uint8_t *stack_pointer;
 

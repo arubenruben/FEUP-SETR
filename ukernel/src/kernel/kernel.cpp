@@ -1,16 +1,16 @@
 #include "kernel.h"
 
-uint8_t stack[TASK_STACK_SIZE * NUM_TASKS];
+uint8_t stack[TASK_STACK_SIZE * N_TASKS];
 
-task_t tasks[NUM_TASKS];
+task_t tasks[N_TASKS];
 
 uint8_t current_task;
 
-volatile uint8_t *volatile current_task_stack_pointer;
+volatile void *volatile current_task_stack_pointer;
 
 void init_stack(void)
 {
-    for (size_t i = 0; i < NUM_TASKS * TASK_STACK_SIZE; i++)
+    for (size_t i = 0; i < N_TASKS * TASK_STACK_SIZE; i++)
     {
         stack[i] = (uint8_t)0;
     }
@@ -18,7 +18,7 @@ void init_stack(void)
 
 void init_tasks(void)
 {
-    for (size_t i = 0; i < NUM_TASKS; i++)
+    for (size_t i = 0; i < N_TASKS; i++)
     {
         tasks[i] = add_task(i);
 
