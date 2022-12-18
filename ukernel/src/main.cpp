@@ -8,7 +8,7 @@ void setup()
   {
     ;
   }
-
+  
   init_kernel();
 
   init_timer(DEFAULT_FREQ);

@@ -1,22 +1,12 @@
 #include "scheduler.h"
 
-void scheduler_tick_handler()
+
+ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
-    if (current_task != MAX_NUMBER)
-    {
-        portSAVE_CONTEXT();
-    }
+    portSAVE_CONTEXT();
 
     scheduler_schedule();
     scheduler_dispatch();
-
-    if (current_task != MAX_NUMBER)
-    {
-        current_task_stack_pointer = &tasks[current_task].stack_pointer;
-        portRESTORE_CONTEXT()
-    }
-
-    asm volatile("ret");
 }
 
 void scheduler_schedule(void)
@@ -43,24 +33,39 @@ void scheduler_dispatch(void)
         if (tasks[i].state == TASK_STATE_RUNNING)
         {
             current_task = i;
-            return;
+            break;
         }
     }
+
+    current_task_stack_pointer = &tasks[current_task].stack_pointer;
+    portRESTORE_CONTEXT();
+
+    // return to execution of the function
+    // PC <- STACK
+    asm volatile("ret");
 }
+
+
+void scheduler_yield_save_context(void)
+{
+    portSAVE_CONTEXT();
+
+    scheduler_schedule();
+    scheduler_dispatch();
+}
+
+extern volatile void *volatile yield_func = &scheduler_yield_save_context;
+
 /**
  * Dont Call Dispatcher Here. Wait For the Tick to Do That Logic
  */
 void scheduler_yield(void)
 {
-    portSAVE_CONTEXT();
-
     tasks[current_task].state = TASK_STATE_IDLE;
 
-    current_task = MAX_NUMBER;
+    asm volatile ("CALL yield_func");
 
-    current_task_stack_pointer = NULL;
-
-    scheduler_tick_handler();
+    return;
 }
 
 //-----------------

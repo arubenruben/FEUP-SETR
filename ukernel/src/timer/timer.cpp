@@ -1,12 +1,5 @@
 #include "timer.h"
 
-ISR(TIMER1_COMPA_vect, ISR_NAKED)
-{
-    scheduler_tick_handler();
-
-    asm volatile("reti");
-}
-
 void init_timer(uint8_t freq)
 {
     noInterrupts(); // disable all interrupts
