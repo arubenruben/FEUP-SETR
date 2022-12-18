@@ -3,15 +3,20 @@
 void setup()
 {
   Serial.begin(BAUD_RATE);
+  while (!Serial);
 
-  while (!Serial)
-  {
-    ;
-  }
+  pinMode(D4, OUTPUT);
+  pinMode(D3, OUTPUT);
+  pinMode(D2, OUTPUT);
+  pinMode(D1, OUTPUT);
   
-  init_kernel();
-
-  init_timer(DEFAULT_FREQ);
+  digitalWrite(D4, HIGH);
+  digitalWrite(D3, HIGH);
+  digitalWrite(D2, HIGH);
+  digitalWrite(D1, HIGH);
+  
+  kernel_init();
+  kernel_start();
 }
 
 void loop()

@@ -1,45 +1,36 @@
 #include "kernel.h"
 
-uint8_t stack[TASK_STACK_SIZE * N_TASKS];
+uint8_t stack[TASK_STACK_SIZE * MAX_TASKS];
+task_t tasks[MAX_TASKS];
+uint8_t n_tasks = 0;
+task_t volatile *current_task;
+task_t volatile *idle_task;
+volatile void *volatile current_task_stack_pointer = NULL;
 
-task_t tasks[N_TASKS];
-
-uint8_t current_task;
-
-volatile void *volatile current_task_stack_pointer;
-
-void init_stack(void)
+void register_tasks(void)
 {
-    for (size_t i = 0; i < N_TASKS * TASK_STACK_SIZE; i++)
+    scheduler_add_task(0, task_1, 0, 10);
+    scheduler_add_task(1, task_2, 0, 1);
+
+    idle_task = scheduler_add_task(256, task_idle, 0, 1);
+}
+
+void kernel_init(void)
+{
+    memset(&stack, 0, MAX_TASKS*TASK_STACK_SIZE*sizeof(uint8_t));
+    for(int i = 0; i < MAX_TASKS; i++)
     {
-        stack[i] = (uint8_t)0;
+        stack[i*TASK_STACK_SIZE] = stack[(i+1)*TASK_STACK_SIZE-1] = 0xf8;
+        stack[i*TASK_STACK_SIZE+1] = stack[(i+1)*TASK_STACK_SIZE-2] = 0xf7;
+        stack[i*TASK_STACK_SIZE+2] = stack[(i+1)*TASK_STACK_SIZE-3] = 0xf6;
     }
+
+    register_tasks();
+    timer_init(DEFAULT_FREQ);
 }
 
-void init_tasks(void)
+void kernel_start(void)
 {
-    for (size_t i = 0; i < N_TASKS; i++)
-    {
-        tasks[i] = add_task(i);
-
-        init_task_bytes(&tasks[i]);
-    }
-}
-
-void init_current_task()
-{
-    current_task = MAX_NUMBER;
-}
-
-void init_global_stack_pointer()
-{
-    current_task_stack_pointer = NULL;
-}
-
-void init_kernel(void)
-{
-    init_stack();
-    init_tasks();
-    init_current_task();
-    init_global_stack_pointer();
+    scheduler_schedule();
+    scheduler_dispatch();
 }

@@ -1,14 +1,13 @@
-#include "task.h"
+#include "scheduler.h"
 
 void *task_2(void *args)
 {
-    params *value = (params *)args;
-
     while (true)
     {
-        Serial.println("Goodbye");
-        Serial.flush();
-        value->scheduler_yield();
+        // Serial.println("Task 2");
+        // Serial.flush();
+        digitalWrite(D2, !digitalRead(D2));
+        scheduler_yield();
     }
 
     return NULL;
