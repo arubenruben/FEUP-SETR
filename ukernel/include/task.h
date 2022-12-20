@@ -4,14 +4,15 @@
 #include <errno.h>
 #include "constants.h"
 
-typedef struct struct_task
+typedef struct
 {
-    uint8_t priority;
+    uint8_t static_priority;
+    uint8_t dynamic_priority;
     uint8_t delay;
     uint8_t period;
     uint8_t state;
 
-    volatile uint8_t *stack_pointer;
+    uint8_t *stack_pointer;
 
     void *(*func)(void *);
 

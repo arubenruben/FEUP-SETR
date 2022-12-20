@@ -1,18 +1,20 @@
 #include "kernel.h"
 
 uint8_t stack[TASK_STACK_SIZE * MAX_TASKS];
+
 task_t tasks[MAX_TASKS];
 uint8_t n_tasks = 0;
-task_t volatile *current_task;
-task_t volatile *idle_task;
+task_t *current_task;
 volatile void *volatile current_task_stack_pointer = NULL;
+
+task_sorted_list_t running_tasks;
 
 void register_tasks(void)
 {
     scheduler_add_task(0, task_1, 0, 10);
     scheduler_add_task(1, task_2, 0, 1);
 
-    idle_task = scheduler_add_task(256, task_idle, 0, 1);
+    scheduler_add_task(256, task_idle, 0, 1);
 }
 
 void kernel_init(void)
