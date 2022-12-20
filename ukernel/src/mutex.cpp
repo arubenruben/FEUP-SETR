@@ -17,17 +17,15 @@ void mutex_init(mutex_t *mutex)
 void mutex_lock(mutex_t *mutex)
 {
     noInterrupts();
-    if (mutex->locked == MUTEX_UNLOCK)
-    {
-        mutex->locked = MUTEX_LOCK;
-        current_task->dynamic_priority = mutex->ceiling;
-    }
-    else
+    if (mutex->locked == MUTEX_LOCK)
     {
         current_task->state = TASK_STATE_BLOCKED;
         task_sorted_list_insert(&mutex->blocked_tasks, current_task);
         mutex_yield();
-    } 
+    }
+
+    mutex->locked = MUTEX_LOCK;
+    current_task->dynamic_priority = mutex->ceiling;
     interrupts();
 }
 
