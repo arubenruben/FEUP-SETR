@@ -14,5 +14,4 @@ void scheduler_dispatch(void);
 
 void scheduler_yield(void) __attribute__((naked));
 
-task_t *scheduler_add_task(uint8_t priority, void *(*func)(void *),
-    uint8_t delay, uint8_t period);
+task_t *scheduler_add_task(uint8_t priority, void *(*func)(void *), void *params, uint8_t delay, uint8_t period);

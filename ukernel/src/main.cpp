@@ -4,6 +4,7 @@ void setup()
 {
   Serial.begin(BAUD_RATE);
   while (!Serial);
+  Serial.flush();
 
   pinMode(D4, OUTPUT);
   pinMode(D3, OUTPUT);

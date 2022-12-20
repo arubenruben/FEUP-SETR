@@ -67,10 +67,9 @@ void scheduler_yield(void)
     scheduler_dispatch();
 }
 
-task_t *scheduler_add_task(uint8_t priority, void *(*func)(void *),
-    uint8_t delay, uint8_t period)
+task_t *scheduler_add_task(uint8_t priority, void *(*func)(void *), void *params, uint8_t delay, uint8_t period)
 {
-    if(n_tasks >= MAX_TASKS)
+    if (n_tasks >= MAX_TASKS)
     {
         return NULL;
     }
@@ -81,7 +80,10 @@ task_t *scheduler_add_task(uint8_t priority, void *(*func)(void *),
 
     // SP begins in the END of the stack
     task->stack_pointer = &stack[TASK_STACK_SIZE * n_tasks - 1 - 3];
+
     task->func = func;
+    task->params = params;
+
     task->delay = delay;
     task->period = period;
 
