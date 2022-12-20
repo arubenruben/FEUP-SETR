@@ -14,7 +14,7 @@ void register_tasks(void)
     scheduler_add_task(0, task_1, 0, 10);
     scheduler_add_task(1, task_2, 0, 1);
 
-    scheduler_add_task(256, task_idle, 0, 1);
+    scheduler_add_task(255, task_idle, 0, 1);
 }
 
 void kernel_init(void)
