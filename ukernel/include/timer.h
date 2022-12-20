@@ -3,4 +3,4 @@
 #include <Arduino.h>
 #include "scheduler.h"
 
-void timer_init(uint8_t freq);
+void timer_init(uint32_t freq);

@@ -1,7 +1,7 @@
 #include "timer.h"
 #include "scheduler.h"
 
-void timer_init(uint8_t freq)
+void timer_init(uint32_t freq)
 {
     noInterrupts(); // disable all interrupts
 

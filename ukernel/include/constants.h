@@ -1,5 +1,7 @@
 #pragma once
 
+#define MAX_NUMBER 255
+
 #define MAX_TASKS 4
 #define TASK_STACK_SIZE 100
 
