@@ -21,6 +21,7 @@ void mutex_lock(mutex_t *mutex)
     {
         current_task->state = TASK_STATE_BLOCKED;
         task_sorted_list_insert(&mutex->blocked_tasks, current_task);
+        task_sorted_list_remove(&running_tasks, current_task);
         mutex_yield();
     }
 
