@@ -1,37 +1,66 @@
+#include "task.h"
 #include "scheduler.h"
+
+void fake_task_2()
+{
+    Serial.println("Task 2");
+    Serial.flush();
+    digitalWrite(D2, !digitalRead(D2));
+}
+
+void true_task_2(volatile uint8_t *number_leds)
+{
+    switch ((*number_leds))
+    {
+    case 0:
+        digitalWrite(D1, HIGH);
+        digitalWrite(D2, HIGH);
+        digitalWrite(D3, HIGH);
+        digitalWrite(D4, HIGH);
+        break;
+    case 1:
+        digitalWrite(D1, LOW);
+
+        digitalWrite(D2, HIGH);
+        digitalWrite(D3, HIGH);
+        digitalWrite(D4, HIGH);
+        break;
+    case 2:
+        digitalWrite(D1, LOW);
+        digitalWrite(D2, LOW);
+
+        digitalWrite(D3, HIGH);
+        digitalWrite(D4, HIGH);
+        break;
+    case 3:
+        digitalWrite(D1, LOW);
+        digitalWrite(D2, LOW);
+        digitalWrite(D3, LOW);
+
+        digitalWrite(D4, HIGH);
+        break;
+    case 4:
+        digitalWrite(D1, LOW);
+        digitalWrite(D2, LOW);
+        digitalWrite(D3, LOW);
+        digitalWrite(D4, LOW);
+        break;
+    default:
+        Serial.println("Unexpected Error in Task 2");
+        break;
+    }
+}
 
 void *task_2(void *args)
 {
+
+    volatile uint8_t *number_leds = (volatile uint8_t *)args;
+
     while (true)
     {
-        Serial.println("Task 2");
-        Serial.flush();
-        digitalWrite(D2, !digitalRead(D2));
+        true_task_2(number_leds);
+        // fake_task_2();
         scheduler_yield();
     }
-
-    /*Code to perform the actual task (insert this inside while(true))
-    switch ((uint8_t)args[0]){
-        case 1:
-            digitalWrite(D1, !digitalRead(D1));
-            break;
-        case 2:
-            digitalWrite(D1, !digitalRead(D1));
-            digitalWrite(D2, !digitalRead(D2));
-            break;
-        case 3:
-            digitalWrite(D1, !digitalRead(D1));
-            digitalWrite(D2, !digitalRead(D2));
-            digitalWrite(D3, !digitalRead(D3));
-            break;
-        case 4:
-            digitalWrite(D1, !digitalRead(D1));
-            digitalWrite(D2, !digitalRead(D2));
-            digitalWrite(D3, !digitalRead(D3));
-            digitalWrite(D4, !digitalRead(D4));
-            break;
-        default:
-    }
-    scheduler_yield();*/
     return NULL;
 }

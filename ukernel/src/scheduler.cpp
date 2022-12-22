@@ -30,7 +30,8 @@ void scheduler_schedule(void)
         if (tasks[i].delay != 0)
         {
             tasks[i].delay--;
-        } else if (tasks[i].state == TASK_STATE_IDLE)
+        }
+        else if (tasks[i].state == TASK_STATE_IDLE)
         {
             tasks[i].state = TASK_STATE_RUNNING;
             tasks[i].delay = tasks[i].period - 1;
@@ -66,10 +67,9 @@ void mutex_yield(void)
 {
     portSAVE_CONTEXT();
     scheduler_dispatch();
-} 
+}
 
-task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *),
-                           uint8_t delay, uint8_t period)
+task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *), void *params, uint8_t delay, uint8_t period)
 {
     if (n_tasks >= MAX_TASKS)
     {
@@ -84,7 +84,10 @@ task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *),
 
     // SP begins in the END of the stack
     task->stack_pointer = &stack[TASK_STACK_SIZE * n_tasks - 1 - 3];
+
     task->func = func;
+    task->params = params;
+
     task->delay = delay;
     task->period = period;
 
