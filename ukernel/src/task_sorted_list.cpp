@@ -28,8 +28,8 @@ void task_sorted_list_remove(task_sorted_list_t *list, task_t *task)
             for (uint8_t j = i; j < list->size; j++)
             {
                 list->elements[j] = list->elements[j + 1];
-                list->size--;
             }
+            list->size--;
             break;
         }
     }

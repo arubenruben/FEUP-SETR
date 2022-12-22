@@ -7,7 +7,7 @@ void *task_1(void *args)
     {
         Serial.println("Task 1");
         Serial.flush();
-        // digitalWrite(D1, !digitalRead(D1));
+        digitalWrite(D1, !digitalRead(D1));
         
         
         
