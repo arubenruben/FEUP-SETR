@@ -1,7 +1,6 @@
-task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *), void *params, uint8_t delay, uint8_t period)
 #include "scheduler.h"
 
-    int i;
+int i;
 
 #define DEBUG
 
