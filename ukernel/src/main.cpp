@@ -8,6 +8,8 @@ void setup()
   
   leds_init();
   segments_init();
+  pinMode(BUZZER_DIO,OUTPUT);
+  digitalWrite(BUZZER_DIO, LOW);
 
   kernel_init();
   kernel_start();

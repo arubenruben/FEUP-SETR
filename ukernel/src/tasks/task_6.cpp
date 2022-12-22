@@ -9,8 +9,7 @@ void fake_task_6()
 
 void true_task_6(byte *seg, volatile unsigned long *seconds_counter)
 {
-    uint32_t result = 0;
-
+   
     uint8_t units = (*seconds_counter) % 10;
 
     uint8_t tens = ((*seconds_counter) / 10) % 10;

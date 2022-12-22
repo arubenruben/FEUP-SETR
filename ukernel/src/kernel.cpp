@@ -12,11 +12,11 @@ volatile uint8_t number_leds = 0;
 
 void register_tasks(void)
 {
-    scheduler_add_task(0, task_1, (void *)&seconds_counter, 0, 10);
-    scheduler_add_task(1, task_2, (void *)&number_leds, 0, 30);
-    scheduler_add_task(2, task_3, (void *)&number_leds, 0, 30);
-    scheduler_add_task(3, task_4, NULL, 0, 30);
-    scheduler_add_task(4, task_5, NULL, 0, 30);
+    scheduler_add_task(1, task_1, (void *)&seconds_counter, 0, 10);
+    scheduler_add_task(2, task_2, (void *)&number_leds, 0, 30);
+    scheduler_add_task(3, task_3, (void *)&number_leds, 0, 30);
+    scheduler_add_task(4, task_4, NULL, 0, 30);
+    scheduler_add_task(0, task_5, NULL, 0, 30);
     scheduler_add_task(5, task_6, (void *)&seconds_counter, 0, 1);
 
     scheduler_add_task(MAX_NUMBER, task_idle, NULL, 0, 1);

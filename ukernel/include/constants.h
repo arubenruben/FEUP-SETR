@@ -29,3 +29,5 @@
 #define LATCH_DIO 4
 #define CLK_DIO 7
 #define DATA_DIO 8
+
+#define BUZZER_DIO 3
