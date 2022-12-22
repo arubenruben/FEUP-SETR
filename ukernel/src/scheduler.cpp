@@ -1,6 +1,8 @@
 #include "scheduler.h"
 
-volatile int i;
+int i;
+
+#define DEBUG
 
 /*
 From https://gcc.gnu.org/onlinedocs/gcc/AVR-Function-Attributes.html
@@ -13,9 +15,6 @@ compiler. Only basic asm statements can safely be included in naked functions
 (see Basic Asm). While using extended asm or a mixture of basic asm and C code
 may appear to work, they cannot be depended upon to work reliably and are not
 supported.
-
-I think we can call the functions safely and then execute code safely (needs
-confirming)
  */
 ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
@@ -32,10 +31,11 @@ void scheduler_schedule(void)
         {
             tasks[i].delay--;
         }
-        else
+        else if (tasks[i].state == TASK_STATE_IDLE)
         {
             tasks[i].state = TASK_STATE_RUNNING;
             tasks[i].delay = tasks[i].period - 1;
+            // task_sorted_list_insert(&running_tasks, &tasks[i]);
         }
     }
 }
@@ -55,6 +55,9 @@ void scheduler_dispatch(void)
     current_task_stack_pointer = &(current_task->stack_pointer);
     portRESTORE_CONTEXT();
 
+#ifdef DEBUG
+    interrupts();
+#endif
     // return to execution of the function
     // PC <- STACK
     asm volatile("reti");
@@ -64,10 +67,18 @@ void scheduler_yield(void)
 {
     portSAVE_CONTEXT();
     current_task->state = TASK_STATE_IDLE;
+    // task_sorted_list_remove(&running_tasks, current_task);
     scheduler_dispatch();
 }
 
-task_t *scheduler_add_task(uint8_t priority, void *(*func)(void *), void *params, uint8_t delay, uint8_t period)
+void mutex_yield(void) __attribute__((naked));
+void mutex_yield(void)
+{
+    portSAVE_CONTEXT();
+    scheduler_dispatch();
+}
+
+task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *), void *params, uint8_t delay, uint8_t period)
 {
     if (n_tasks >= MAX_TASKS)
     {
@@ -75,7 +86,9 @@ task_t *scheduler_add_task(uint8_t priority, void *(*func)(void *), void *params
     }
     task_t *task = &tasks[n_tasks++];
 
-    task->priority = priority;
+    task->static_priority = static_priority;
+    task->dynamic_priority = static_priority;
+
     task->state = TASK_STATE_IDLE;
 
     // SP begins in the END of the stack
@@ -88,5 +101,6 @@ task_t *scheduler_add_task(uint8_t priority, void *(*func)(void *), void *params
     task->period = period;
 
     task_stack_init(task);
+
     return task;
 }

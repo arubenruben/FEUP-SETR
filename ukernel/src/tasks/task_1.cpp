@@ -1,9 +1,11 @@
+#include "task.h"
 #include "scheduler.h"
-#include "Arduino.h"
 
 void fake_task_1()
 {
-    Serial.println("Hello World");
+    Serial.println("Task 1");
+    Serial.flush();
+    digitalWrite(D1, !digitalRead(D1));
 }
 
 void true_task_1(volatile unsigned long *seconds_counter, unsigned long *last_tick)
@@ -13,11 +15,10 @@ void true_task_1(volatile unsigned long *seconds_counter, unsigned long *last_ti
     if ((current_tick - (*last_tick)) >= 1000)
     {
         (*seconds_counter)++;
-        
-        #ifdef DEBUG
-            Serial.println((*seconds_counter));
-        #endif
 
+#ifdef DEBUG
+        Serial.println((*seconds_counter));
+#endif
         (*last_tick) = current_tick;
     }
 }
@@ -34,7 +35,7 @@ void *task_1(void *args)
 
     while (true)
     {
-        // fake_task_1();
+        //fake_task_1();
 
         true_task_1(seconds_counter, &last_tick);
 
