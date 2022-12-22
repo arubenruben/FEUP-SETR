@@ -41,3 +41,4 @@ void kernel_start(void)
     scheduler_schedule();
     scheduler_dispatch();
 }
+task_sorted_list_t running_tasks;

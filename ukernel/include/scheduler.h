@@ -5,6 +5,7 @@
 #include "context.h"
 #include "task.h"
 #include "kernel.h"
+#include "task_sorted_list.h"
 
 void scheduler_tick_handler(void) __attribute__((naked));
 

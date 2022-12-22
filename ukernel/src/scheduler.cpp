@@ -1,6 +1,7 @@
+task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *), void *params, uint8_t delay, uint8_t period)
 #include "scheduler.h"
 
-int i;
+    int i;
 
 #define DEBUG
 
@@ -35,23 +36,14 @@ void scheduler_schedule(void)
         {
             tasks[i].state = TASK_STATE_RUNNING;
             tasks[i].delay = tasks[i].period - 1;
-            // task_sorted_list_insert(&running_tasks, &tasks[i]);
+            task_sorted_list_insert(&running_tasks, &tasks[i]);
         }
     }
 }
 
 void scheduler_dispatch(void)
 {
-    // current_task = idle_task;
-    for (i = 0; i < n_tasks; i++)
-    {
-        if (tasks[i].state == TASK_STATE_RUNNING)
-        {
-            current_task = &tasks[i];
-            break;
-        }
-    }
-
+    current_task = running_tasks.elements[0];
     current_task_stack_pointer = &(current_task->stack_pointer);
     portRESTORE_CONTEXT();
 
@@ -67,7 +59,7 @@ void scheduler_yield(void)
 {
     portSAVE_CONTEXT();
     current_task->state = TASK_STATE_IDLE;
-    // task_sorted_list_remove(&running_tasks, current_task);
+    task_sorted_list_remove(&running_tasks, current_task);
     scheduler_dispatch();
 }
 
@@ -101,6 +93,5 @@ task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *), void 
     task->period = period;
 
     task_stack_init(task);
-
     return task;
 }
