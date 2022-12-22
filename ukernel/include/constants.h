@@ -6,7 +6,7 @@
 #define TASK_STACK_SIZE 100
 
 #define BAUD_RATE 9600
-#define DEFAULT_FREQ 60
+#define DEFAULT_FREQ 180
 
 #define TASK_STATE_IDLE 0
 #define TASK_STATE_RUNNING 1

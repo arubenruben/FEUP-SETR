@@ -20,8 +20,11 @@ void true_task_6(byte *seg, volatile unsigned long *seconds_counter)
     uint8_t thousands = ((*seconds_counter) / 1000) % 10;
 
     WriteNumberToSegment(3, units);
+    scheduler_yield();
     WriteNumberToSegment(2, tens);
+    scheduler_yield();
     WriteNumberToSegment(1, hundreds);
+    scheduler_yield();
     WriteNumberToSegment(0, thousands);
 }
 
@@ -33,7 +36,7 @@ void *task_6(void *args)
 
     while (true)
     {
-        //fake_task_6();
+        // fake_task_6();
         true_task_6(&seg, seconds_counter);
         scheduler_yield();
     }
