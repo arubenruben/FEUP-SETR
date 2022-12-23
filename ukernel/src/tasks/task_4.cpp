@@ -10,11 +10,7 @@ void fake_task_4()
 
 void true_task_4()
 {   
-    if(digitalRead(A1)){
-        digitalWrite(BUZZER_DIO,HIGH);
-    }
-    else
-        digitalWrite(BUZZER_DIO,LOW);
+    digitalWrite(BUZZER_DIO, digitalRead(A1));
 }
 
 void *task_4(void *args)

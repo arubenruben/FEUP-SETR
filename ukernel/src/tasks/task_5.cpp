@@ -18,7 +18,7 @@ void *task_5(void *args)
 {
     while (true)
     {
-        //fake_task_5();
+        // fake_task_5();
         true_task_5();
         scheduler_yield();
     }

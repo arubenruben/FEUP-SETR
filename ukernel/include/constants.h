@@ -1,8 +1,8 @@
 #pragma once
 
-#define MAX_NUMBER 255
+#define MAX_PRIORITY INT8_MAX
 
-#define MAX_TASKS 7
+#define MAX_TASKS 8
 #define TASK_STACK_SIZE 100
 
 #define BAUD_RATE 9600
@@ -17,13 +17,10 @@
 #define D3 11
 #define D4 10
 
-#define MUTEX_LOCK 0
-#define MUTEX_UNLOCK 1
-#define N_MUTEXES 2
 #define NUM_MAX_LEDS 5
 
-#define MUTEX_LOCK 0
-#define MUTEX_UNLOCK 1
+#define MUTEX_UNLOCKED 0
+#define MUTEX_LOCKED 1
 #define N_MUTEXES 2
 
 #define LATCH_DIO 4

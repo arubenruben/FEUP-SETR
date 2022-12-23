@@ -14,6 +14,8 @@ typedef struct _mutex_t
 
 void mutex_init(mutex_t *mutex);
 
-void mutex_lock(mutex_t *mutex, task_t *task);
+void mutex_register_task(mutex_t *mutex, task_t *task);
 
-void mutex_unlock(mutex_t *mutex, task_t *task);
+void mutex_lock(mutex_t *mutex);
+
+void mutex_unlock(mutex_t *mutex);
