@@ -23,6 +23,7 @@ void kernel_init(void)
         mutex_init(&mutexes[i]);
     }
     register_tasks();
+    scheduler_add_task(MAX_PRIORITY, task_idle, NULL, 0, 1);
     timer_init(1000 / DEFAULT_PERIOD);
 }
 

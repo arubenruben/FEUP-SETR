@@ -69,7 +69,7 @@ void mutex_yield(void)
     scheduler_dispatch();
 }
 
-task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *), void *params, uint8_t delay, uint8_t period)
+task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *), void *params, uint32_t delay, uint32_t period)
 {
     if (n_tasks >= MAX_TASKS)
     {
@@ -88,8 +88,10 @@ task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *), void 
     task->func = func;
     task->params = params;
 
-    task->delay = delay;
-    task->period = period;
+    task->delay = delay / DEFAULT_PERIOD;
+
+    task->period = period / DEFAULT_PERIOD;
+    if (task->period == 0) task->period = 1;
 
     task_stack_init(task);
     return task;

@@ -1,6 +1,8 @@
 #include "task.h"
 #include "scheduler.h"
 
+#define DEBUG
+
 void fake_task_1()
 {
     Serial.println("Task 1");
@@ -10,17 +12,17 @@ void fake_task_1()
 
 void true_task_1(volatile unsigned long *seconds_counter, unsigned long *last_tick)
 {
-    unsigned long current_tick = millis();
+    // unsigned long current_tick = millis();
 
-    if ((current_tick - (*last_tick)) >= 1000)
-    {
-        (*seconds_counter)++;
+    // if ((current_tick - (*last_tick)) >= 1000)
+    // {
+    (*seconds_counter)++;
 
 #ifdef DEBUG
         Serial.println((*seconds_counter));
 #endif
-        (*last_tick) = current_tick;
-    }
+    //     (*last_tick) = current_tick;
+    // }
 }
 
 /**

@@ -9,8 +9,8 @@ typedef struct
 {
     uint8_t static_priority;
     uint8_t dynamic_priority;
-    uint8_t delay;
-    uint8_t period;
+    uint32_t delay;
+    uint32_t period;
     uint8_t state;
 
     uint8_t *stack_pointer;
