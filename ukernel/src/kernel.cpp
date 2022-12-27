@@ -23,7 +23,7 @@ void kernel_init(void)
         mutex_init(&mutexes[i]);
     }
     register_tasks();
-    timer_init(DEFAULT_FREQ);
+    timer_init(1000 / DEFAULT_PERIOD);
 }
 
 void kernel_start(void)
