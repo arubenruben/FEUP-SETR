@@ -35,4 +35,6 @@ void *task_5(void *args);
 
 void *task_6(void *args);
 
+void *task_7(void *args);
+
 void *task_idle(void *args);

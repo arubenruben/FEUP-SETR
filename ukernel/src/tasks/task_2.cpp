@@ -10,13 +10,14 @@ void fake_task_2()
 
 void true_task_2(volatile uint8_t *number_leds)
 {
-    mutex_t *mutex = &mutexes[0];
-    mutex_lock(mutex);
+    mutex_lock(&mutexes[1]);
+    mutex_lock(&mutexes[0]);
     digitalWrite(D1, *number_leds < 1);
     digitalWrite(D2, *number_leds < 2);
     digitalWrite(D3, *number_leds < 3);
     digitalWrite(D4, *number_leds < 4);
-    mutex_unlock(mutex);
+    mutex_unlock(&mutexes[0]);
+    mutex_unlock(&mutexes[1]);
 }
 
 void *task_2(void *args)

@@ -10,13 +10,10 @@ void fake_task_3()
 
 void true_task_3(volatile uint8_t *number_leds)
 {
-    /**
-     * TODO: Block Mutex
-     *
-     */
-
+    mutex_lock(&mutexes[1]);
     (*number_leds)++;
     (*number_leds) = (*number_leds) % NUM_MAX_LEDS;
+    mutex_unlock(&mutexes[1]);
 }
 
 void *task_3(void *args)
