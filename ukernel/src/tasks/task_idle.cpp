@@ -2,7 +2,8 @@
 
 void *task_idle(void *args)
 {
-    while (true);
+    while (true)
+        ;
 
     return 0;
 }

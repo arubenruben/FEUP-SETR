@@ -14,6 +14,8 @@ void setup()
   pinMode(BUZZER_DIO,OUTPUT);
   digitalWrite(BUZZER_DIO, HIGH);
 
+  init_measurements();
+  
   kernel_init();
   kernel_start();
 }

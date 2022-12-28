@@ -1,12 +1,6 @@
 #include "task.h"
 #include "scheduler.h"
 
-void fake_task_6()
-{
-    Serial.println("Task 6");
-    Serial.flush();
-}
-
 void true_task_6(byte *seg, volatile unsigned long *seconds_counter)
 {
     uint8_t units = (*seconds_counter) % 10;
@@ -31,7 +25,6 @@ void *task_6(void *args)
 
     while (true)
     {
-        // fake_task_6();
         true_task_6(&seg, seconds_counter);
         scheduler_yield();
     }

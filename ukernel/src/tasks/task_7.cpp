@@ -32,8 +32,7 @@ void *task_7(void * parms)
                 scheduler_yield();
             }
 
-            mutex_unlock(mutex);
-            // Serial.println("unlocked");
+            mutex_unlock(mutex);;
         }
         scheduler_yield();
     }

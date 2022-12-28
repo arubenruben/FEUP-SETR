@@ -6,6 +6,7 @@
 #include "timer.h"
 #include "leds.h"
 #include "segments.h"
+#include "measurements.h"
 
 void setup(void);
 
