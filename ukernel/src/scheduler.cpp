@@ -19,12 +19,14 @@ supported.
 ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
     portSAVE_CONTEXT();
+    Serial.println("Hello");
     scheduler_schedule();
     scheduler_dispatch();
 }
 
 void scheduler_schedule(void)
 {
+    
     for (i = 0; i < n_tasks; i++)
     {
         if (tasks[i].delay != 0)
@@ -91,7 +93,8 @@ task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *), void 
     task->delay = delay / DEFAULT_PERIOD;
 
     task->period = period / DEFAULT_PERIOD;
-    if (task->period == 0) task->period = 1;
+    if (task->period == 0)
+        task->period = 1;
 
     task_stack_init(task);
     return task;
