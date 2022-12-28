@@ -58,7 +58,6 @@ void scheduler_yield(void)
     portSAVE_CONTEXT();
     current_task->state = TASK_STATE_IDLE;
     task_sorted_list_remove(&running_tasks, current_task);
-    add_measure(micros());
     scheduler_dispatch();
 }
 

@@ -6,16 +6,17 @@ volatile uint8_t number_leds = 0;
 void setup()
 {
   Serial.begin(BAUD_RATE);
-  while (!Serial);
+  while (!Serial)
+    ;
   Serial.flush();
-  
+
   leds_init();
   segments_init();
-  pinMode(BUZZER_DIO,OUTPUT);
+  pinMode(BUZZER_DIO, OUTPUT);
   digitalWrite(BUZZER_DIO, HIGH);
 
   init_measurements();
-  
+
   kernel_init();
   kernel_start();
 }
@@ -23,7 +24,6 @@ void setup()
 void register_tasks(void)
 {
   scheduler_add_task(1, task_1, (void *)&seconds_counter, 0, 1000);
-  /*
   task_t *task2 = scheduler_add_task(2, task_2, (void *)&number_leds, 0, 150);
   task_t *task3 = scheduler_add_task(3, task_3, (void *)&number_leds, 0, 150);
   scheduler_add_task(4, task_4, NULL, 0, 25);
@@ -35,7 +35,6 @@ void register_tasks(void)
   mutex_register_task(&mutexes[0], task7);
   mutex_register_task(&mutexes[1], task2);
   mutex_register_task(&mutexes[1], task3);
-  */
 }
 
 void loop()
