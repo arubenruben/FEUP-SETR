@@ -2,9 +2,7 @@
 
 void *task_idle(void *args)
 {
-    while (true){
-        add_measure(micros());
-    }
+    while (true);
         
 
     return 0;

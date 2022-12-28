@@ -17,7 +17,6 @@ supported.
  */
 ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
-    add_measure(micros());
     portSAVE_CONTEXT();
     scheduler_schedule();
     scheduler_dispatch();
@@ -44,7 +43,6 @@ void scheduler_dispatch(void)
 {
     current_task = running_tasks.elements[0];
     current_task_stack_pointer = &(current_task->stack_pointer);
-
     portRESTORE_CONTEXT();
 
 #ifdef DEBUG
@@ -60,6 +58,7 @@ void scheduler_yield(void)
     portSAVE_CONTEXT();
     current_task->state = TASK_STATE_IDLE;
     task_sorted_list_remove(&running_tasks, current_task);
+    add_measure(micros());
     scheduler_dispatch();
 }
 
