@@ -25,8 +25,6 @@ ISR(TIMER1_COMPA_vect, ISR_NAKED)
 
 void scheduler_schedule(void)
 {
-    add_measure(micros());
-    
     for (i = 0; i < n_tasks; i++)
     {
         if (tasks[i].delay != 0)
@@ -40,14 +38,15 @@ void scheduler_schedule(void)
             task_sorted_list_insert(&running_tasks, &tasks[i]);
         }
     }
-
-    add_measure(micros());
 }
 
 void scheduler_dispatch(void)
 {
     current_task = running_tasks.elements[0];
     current_task_stack_pointer = &(current_task->stack_pointer);
+    
+    add_measure(micros());
+
     portRESTORE_CONTEXT();
 
 #ifdef DEBUG
