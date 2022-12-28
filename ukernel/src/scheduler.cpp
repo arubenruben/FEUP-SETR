@@ -1,8 +1,7 @@
 #include "scheduler.h"
 
 int i;
-
-#define DEBUG
+unsigned long mili_value;
 
 /*
 From https://gcc.gnu.org/onlinedocs/gcc/AVR-Function-Attributes.html
@@ -19,14 +18,16 @@ supported.
 ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
     portSAVE_CONTEXT();
-    Serial.println("Hello");
+
+    add_measure(micros());
+    
     scheduler_schedule();
     scheduler_dispatch();
 }
 
 void scheduler_schedule(void)
 {
-    
+
     for (i = 0; i < n_tasks; i++)
     {
         if (tasks[i].delay != 0)

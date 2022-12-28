@@ -27,14 +27,15 @@ void add_measure(unsigned long measurement)
 
     if (measurements.size == MEASUREMENTS_SIZE)
     {
+        noInterrupts();
         print_measures();
     }
 }
 
 void print_measures()
 {
-    noInterrupts();
-
+    Serial.flush();
+    
     Serial.println("End Execution 100 Measurments Reached. Print Then Exit");
     Serial.println("------------------");
 
@@ -45,13 +46,15 @@ void print_measures()
 
     for (size_t i = 0; i < MEASUREMENTS_SIZE; i++)
     {
-        Serial.print(measurements.vec->start);
+        Serial.print(measurements.vec[i].start);
         Serial.print("\t");
-        Serial.print(measurements.vec->start);
+        Serial.print(measurements.vec[i].end);
         Serial.print("\n");
     }
 
     Serial.println("------------------");
+    
+    Serial.flush();
 
     exit(0);
 }
