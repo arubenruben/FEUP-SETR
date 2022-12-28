@@ -12,10 +12,8 @@ void true_task_2(volatile uint8_t *number_leds)
     digitalWrite(D2, *number_leds < 2);
     digitalWrite(D3, *number_leds < 3);
     digitalWrite(D4, *number_leds < 4);
-    add_measure(micros());
     mutex_unlock(&mutexes[0]);
     mutex_unlock(&mutexes[1]);
-    add_measure(micros());
 }
 
 void *task_2(void *args)

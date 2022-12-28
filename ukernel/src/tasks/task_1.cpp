@@ -18,6 +18,7 @@ void *task_1(void *args)
 
     while (true)
     {
+        add_measure(micros());
         true_task_1(seconds_counter, &last_tick);
 
         scheduler_yield();

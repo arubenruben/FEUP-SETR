@@ -4,6 +4,7 @@
 #include <errno.h>
 #include "constants.h"
 #include "segments.h"
+#include "measurements.h"
 
 typedef struct
 {

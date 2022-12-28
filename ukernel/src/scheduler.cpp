@@ -17,8 +17,8 @@ supported.
  */
 ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
+    add_measure(micros());
     portSAVE_CONTEXT();
-
     scheduler_schedule();
     scheduler_dispatch();
 }
