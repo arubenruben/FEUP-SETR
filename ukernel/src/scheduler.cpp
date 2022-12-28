@@ -44,8 +44,6 @@ void scheduler_dispatch(void)
 {
     current_task = running_tasks.elements[0];
     current_task_stack_pointer = &(current_task->stack_pointer);
-    
-    add_measure(micros());
 
     portRESTORE_CONTEXT();
 

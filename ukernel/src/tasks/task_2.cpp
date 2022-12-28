@@ -3,8 +3,13 @@
 
 void true_task_2(volatile uint8_t *number_leds)
 {
+    add_measure(micros());
+    
     mutex_lock(&mutexes[1]);
     mutex_lock(&mutexes[0]);
+    
+    add_measure(micros());
+    
     digitalWrite(D1, *number_leds < 1);
     digitalWrite(D2, *number_leds < 2);
     digitalWrite(D3, *number_leds < 3);
