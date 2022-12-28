@@ -19,15 +19,14 @@ ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
     portSAVE_CONTEXT();
 
-    add_measure(micros());
-    
     scheduler_schedule();
     scheduler_dispatch();
 }
 
 void scheduler_schedule(void)
 {
-
+    add_measure(micros());
+    
     for (i = 0; i < n_tasks; i++)
     {
         if (tasks[i].delay != 0)
@@ -41,6 +40,8 @@ void scheduler_schedule(void)
             task_sorted_list_insert(&running_tasks, &tasks[i]);
         }
     }
+
+    add_measure(micros());
 }
 
 void scheduler_dispatch(void)
