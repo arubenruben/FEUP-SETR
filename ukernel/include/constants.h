@@ -28,3 +28,5 @@
 #define DATA_DIO 8
 
 #define BUZZER_DIO 3
+
+#define MEASUREMENTS_SIZE 1

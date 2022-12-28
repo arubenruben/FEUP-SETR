@@ -1,8 +1,7 @@
 #include "scheduler.h"
 
 int i;
-
-#define DEBUG
+unsigned long mili_value;
 
 /*
 From https://gcc.gnu.org/onlinedocs/gcc/AVR-Function-Attributes.html
@@ -91,7 +90,8 @@ task_t *scheduler_add_task(uint8_t static_priority, void *(*func)(void *), void 
     task->delay = delay / DEFAULT_PERIOD;
 
     task->period = period / DEFAULT_PERIOD;
-    if (task->period == 0) task->period = 1;
+    if (task->period == 0)
+        task->period = 1;
 
     task_stack_init(task);
     return task;
