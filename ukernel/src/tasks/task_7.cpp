@@ -8,10 +8,8 @@ void *task_7(void * parms)
     {
         if (!digitalRead(A3))
         {
-            // Serial.println("Trying to lock");
             mutex_lock(mutex);
-            // Serial.println("locked");
-
+           
             digitalWrite(D1, HIGH);
             digitalWrite(D2, HIGH);
             digitalWrite(D3, HIGH);
