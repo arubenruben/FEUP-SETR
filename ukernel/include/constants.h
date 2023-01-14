@@ -29,4 +29,6 @@
 
 #define BUZZER_DIO 3
 
-#define MEASUREMENTS_SIZE 1
+#define MEASUREMENTS_SIZE 100
+
+#define MEASUREMENTS

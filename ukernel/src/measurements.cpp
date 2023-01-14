@@ -1,32 +1,42 @@
 #include "measurements.h"
+#ifdef MEASUREMENTS
 
-measure_vec measurements;
-
-void init_measurements()
+typedef struct
 {
-    measurements.size = 0;
+    unsigned long start;
+    unsigned long end;
+
+} measurement_t;
+
+measurement_t measurements[MEASUREMENTS_SIZE];
+uint16_t measurements_size;
+measurement_t *measurements_head;
+
+void
+init_measurements()
+{
+    measurements_size = 0;
 
     for (size_t i = 0; i < MEASUREMENTS_SIZE; i++)
     {
-        measurements.vec[i].start = 0;
-        measurements.vec[i].end = 0;
+        measurements[i].start = 0;
+        measurements[i].end = 0;
     }
+    measurements_head = measurements;
 }
 
-void add_measure(unsigned long measurement)
+void start_measure(unsigned long measurement)
 {
-    if (measurements.vec[measurements.size].start == 0)
-    {
-        measurements.vec[measurements.size].start = measurement;
-    }
-    else
-    {
-        measurements.vec[measurements.size].end = measurement;
-        measurements.size++;
-    }
+    measurements_head->start = measurement;
+}
 
-    if (measurements.size == MEASUREMENTS_SIZE)
-    {
+void end_measure(unsigned long measurement)
+{
+    measurements_head->end = measurement;
+    measurements_head++;
+    measurements_size++;
+
+    if (measurements_size > 100) {
         noInterrupts();
         print_measures();
     }
@@ -36,7 +46,9 @@ void print_measures()
 {
     Serial.flush();
     
-    Serial.println("End Execution 100 Measurments Reached. Print Then Exit");
+    Serial.print("Ended Execution. ");
+    Serial.print(MEASUREMENTS_SIZE);
+    Serial.println(" Measurements Reached. Print Then Exit");
     Serial.println("------------------");
 
     Serial.print("Begin(ms)");
@@ -46,9 +58,9 @@ void print_measures()
 
     for (size_t i = 0; i < MEASUREMENTS_SIZE; i++)
     {
-        Serial.print(measurements.vec[i].start);
+        Serial.print(measurements[i].start);
         Serial.print("\t");
-        Serial.print(measurements.vec[i].end);
+        Serial.print(measurements[i].end);
         Serial.print("\n");
     }
 
@@ -58,3 +70,4 @@ void print_measures()
 
     exit(0);
 }
+#endif
