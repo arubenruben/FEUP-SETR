@@ -37,6 +37,7 @@ void mutex_lock(mutex_t *mutex)
 
 void mutex_unlock(mutex_t *mutex)
 {
+    START_MEASURE();
     noInterrupts();
     if(mutex->locked)
     {
@@ -52,4 +53,5 @@ void mutex_unlock(mutex_t *mutex)
         }
     }
     interrupts();
+    END_MEASURE();
 }
