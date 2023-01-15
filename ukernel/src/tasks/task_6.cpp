@@ -10,8 +10,6 @@
  */
 void *task_6(void *args)
 {
-    byte seg = 0;
-
     volatile unsigned long *seconds_counter = (volatile unsigned long *)args;
 
     while (true)

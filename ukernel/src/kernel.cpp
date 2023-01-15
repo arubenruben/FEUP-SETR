@@ -26,9 +26,7 @@ void kernel_init(void)
     scheduler_add_task(MAX_PRIORITY, task_idle, NULL, 0, 1);
     timer_init(1000 / DEFAULT_PERIOD);
 
-    #ifdef MEASUREMENTS
-    init_measurements();
-    #endif
+    INIT_MEASUREMENTS();
 }
 
 void kernel_start(void)

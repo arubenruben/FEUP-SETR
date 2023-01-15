@@ -11,12 +11,9 @@ void *task_1(void *args)
 {
     volatile unsigned long *seconds_counter = (volatile unsigned long *)args;
 
-    unsigned long last_tick = 0;
-
     while (true)
     {
         (*seconds_counter)++;
-        
         scheduler_yield();
     }
 

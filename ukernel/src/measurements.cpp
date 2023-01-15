@@ -36,7 +36,8 @@ void end_measure(unsigned long measurement)
     measurements_head++;
     measurements_size++;
 
-    if (measurements_size > 100) {
+    if (measurements_size > MEASUREMENTS_SIZE)
+    {
         noInterrupts();
         print_measures();
     }
@@ -51,17 +52,13 @@ void print_measures()
     Serial.println(" Measurements Reached. Print Then Exit");
     Serial.println("------------------");
 
-    Serial.print("Begin(ms)");
-    Serial.print("\t");
-    Serial.print("End(ms)");
-    Serial.print("\n");
+    Serial.println("start\tend");
 
     for (size_t i = 0; i < MEASUREMENTS_SIZE; i++)
     {
         Serial.print(measurements[i].start);
         Serial.print("\t");
-        Serial.print(measurements[i].end);
-        Serial.print("\n");
+        Serial.println(measurements[i].end);
     }
 
     Serial.println("------------------");

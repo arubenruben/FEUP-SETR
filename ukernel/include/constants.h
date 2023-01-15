@@ -2,8 +2,8 @@
 
 #define MAX_PRIORITY INT8_MAX
 
-#define MAX_TASKS 8
-#define TASK_STACK_SIZE 100
+#define MAX_TASKS 16
+#define TASK_STACK_SIZE 50
 
 #define BAUD_RATE 9600
 #define DEFAULT_PERIOD 5 // ms
@@ -29,6 +29,6 @@
 
 #define BUZZER_DIO 3
 
-#define MEASUREMENTS_SIZE 100
+#define MEASUREMENTS_SIZE 50
 
 #define MEASUREMENTS

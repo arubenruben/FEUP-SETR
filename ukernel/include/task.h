@@ -24,6 +24,10 @@ typedef struct
 
 void task_stack_init(task_t *task);
 
+void *task_measure_1(void *args);
+void *task_measure_2(void *args);
+void *task_measure_3(void *args);
+
 void *task_1(void *args);
 
 void *task_2(void *args);
