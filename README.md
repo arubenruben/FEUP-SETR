@@ -24,7 +24,7 @@ Please refer to our report sheet for further implementation details.
 ### Collaboration
 
 This project was carried out by two Electrical Engineering students:
-* Andre Campanha
+* André Campanhã
 * Miguel Almeida
 
 And a Computing Engineering student:
@@ -34,8 +34,8 @@ And a Computing Engineering student:
 * C
 * SimAvR Assembly
 
-### Licenssing
+### License
 
-This code was developed by students at FEUP. Use it in your own responsibility.
+This code was developed by students at FEUP.
 
-Avaiable under Apache 2.0 Licessing. Use it at your own risk and responsability.
+Avaialble under Apache 2.0 License. Use it at your own risk and responsibility.
