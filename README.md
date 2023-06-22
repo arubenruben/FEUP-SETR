@@ -33,7 +33,7 @@ And a Computing Engineering student:
 ### Programming Languages
 * C
 * SimAvR Assembly
-* 
+
 ### Licenssing
 
 This code was developed by students at FEUP. Use it in your own responsibility.
